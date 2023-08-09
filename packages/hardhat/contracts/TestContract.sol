@@ -12,4 +12,10 @@ import {FrontDoorStructs} from './DataModel.sol';
 
 contract TestContract {
   constructor() {}
+
+  function getBlockTimeStamp() public view returns (uint){
+    return block.timestamp;
+  }
+
+
 }
