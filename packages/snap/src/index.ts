@@ -1,5 +1,6 @@
-import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { panel, text } from '@metamask/snaps-ui';
+import { OnCronjobHandler, OnRpcRequestHandler } from '@metamask/snaps-types';
+import { panel, text, heading } from '@metamask/snaps-ui';
+
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -11,20 +12,34 @@ import { panel, text } from '@metamask/snaps-ui';
  * @returns The result of `snap_dialog`.
  * @throws If the request method is not valid for this snap.
  */
+
+export const onCronjob: OnCronjobHandler = async ({ request }) => {
+  switch (request.method) {
+    case 'checkStatus':
+      return snap.request({
+        method: 'snap_notify',
+        params: {
+          type: 'inApp',
+          message: `Hello from cron`,
+        },
+      });
+
+    default:
+      throw new Error('Method not found.');
+  }
+};
+
 export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
   switch (request.method) {
     case 'hello':
       return snap.request({
-        method: 'snap_dialog',
+        method: 'snap_notify',
         params: {
-          type: 'confirmation',
-          content: panel([
-            text(`Hello, **${origin}**!`),
-            text('This custom confirmation is just for display purposes.'),
-            text('hola'),
-          ]),
+          type: 'inApp',
+          message: `Hello, world!`,
         },
       });
+
     default:
       throw new Error('Method not found.');
   }
