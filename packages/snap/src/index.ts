@@ -13,6 +13,10 @@ import { panel, text, heading } from '@metamask/snaps-ui';
  * @throws If the request method is not valid for this snap.
  */
 
+const testFunction = (): string => {
+  return 'test from fn with cron';
+};
+
 export const onCronjob: OnCronjobHandler = async ({ request }) => {
   switch (request.method) {
     case 'checkStatus':
@@ -20,7 +24,7 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
         method: 'snap_notify',
         params: {
           type: 'inApp',
-          message: `Hello from cron`,
+          message: testFunction(),
         },
       });
 
