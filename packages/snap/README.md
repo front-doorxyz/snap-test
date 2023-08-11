@@ -16,3 +16,5 @@ to run the tests in `src/index.test.ts`.
 - Babel is used for transpiling TypeScript to JavaScript, so when building with
   the CLI, `transpilationMode` must be set to `localOnly` (default) or
   `localAndDeps`.
+
+`yarn mm-snap watch --transpilationMode localAndDeps`
